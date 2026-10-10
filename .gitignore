@@ -1,0 +1,32 @@
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+
+# Local SQLite Database & Wal/Shm
+database/*.db
+database/*.db-journal
+database/*.db-wal
+database/*.db-shm
+*.sqlite
+*.sqlite3
+
+# Environment & Secrets
+.env
+.env.*
+*.secret
+*.key
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

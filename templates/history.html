@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!--
+    history.html — URL Analysis History Page
+    CNS Concept: Audit logging and security monitoring
+    Displays all previously analyzed URLs with risk levels
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History | Phishing Detection System</title>
+    <meta name="description" content="View history of all URL analyses performed by the Phishing Detection System.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <div class="brand-name">PhishDetect</div>
+                    <div class="brand-sub">CNS Security Project</div>
+                </div>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a href="/">🏠 Analyzer</a></li>
+                <li><a href="/history" class="active">📋 History</a></li>
+                <li><a href="/learn">📖 Learn</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+
+            <!-- Page Header -->
+            <div class="hero" style="padding: 40px 0 32px;">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Audit Log — CNS Security Project
+                </div>
+                <h1 style="font-size: clamp(1.5rem, 4vw, 2.2rem);">URL Analysis History</h1>
+                <p>Complete audit trail of all URLs analyzed by the system.</p>
+            </div>
+
+            <!-- Action Bar -->
+            <div class="section-header" style="margin-bottom: 20px;">
+                <div class="section-title">📋 Recent Analyses</div>
+                <div style="display:flex;gap:10px;align-items:center;">
+                    <a href="/" class="btn btn-primary">
+                        + Analyze New URL
+                    </a>
+                    {% if history %}
+                    <button class="btn btn-danger" onclick="clearHistory()">
+                        🗑️ Clear History
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- History Table -->
+            {% if history %}
+            <div class="card" style="padding: 0; overflow: hidden;">
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>URL</th>
+                                <th>Score</th>
+                                <th>Risk Level</th>
+                                <th>Key Findings</th>
+                                <th>Analyzed At</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in history %}
+                            <tr>
+                                <td style="color:var(--text-muted);font-size:0.78rem;">{{ loop.index }}</td>
+                                
+                                <td>
+                                    <div class="url-cell" title="{{ item.url }}" style="max-width:250px;">
+                                        {{ item.url }}
+                                    </div>
+                                </td>
+                                
+                                <td>
+                                    {% if item.risk_level == 'LOW' %}
+                                        <span class="status-badge safe">{{ item.risk_score }}/100</span>
+                                    {% elif item.risk_level == 'SUSPICIOUS' %}
+                                        <span class="status-badge warning">{{ item.risk_score }}/100</span>
+                                    {% else %}
+                                        <span class="status-badge danger">{{ item.risk_score }}/100</span>
+                                    {% endif %}
+                                </td>
+                                
+                                <td>
+                                    {% if item.risk_level == 'LOW' %}
+                                        <span class="status-badge safe">🟢 Low Risk</span>
+                                    {% elif item.risk_level == 'SUSPICIOUS' %}
+                                        <span class="status-badge warning">🟡 Suspicious</span>
+                                    {% else %}
+                                        <span class="status-badge danger">🔴 High Risk</span>
+                                    {% endif %}
+                                </td>
+                                
+                                <td style="max-width:280px;">
+                                    {% if item.reasons %}
+                                        <div style="font-size:0.78rem;color:var(--text-secondary);">
+                                            {% for reason in item.reasons[:2] %}
+                                                <div style="margin-bottom:2px;">⚠️ {{ reason[:60] }}{% if reason|length > 60 %}...{% endif %}</div>
+                                            {% endfor %}
+                                            {% if item.reasons|length > 2 %}
+                                                <div style="color:var(--text-muted);font-size:0.72rem;">
+                                                    +{{ item.reasons|length - 2 }} more finding(s)
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <span style="font-size:0.78rem;color:var(--text-muted);">No suspicious findings</span>
+                                    {% endif %}
+                                </td>
+                                
+                                <td class="date-cell">{{ item.analyzed_at }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;text-align:right;font-size:0.78rem;color:var(--text-muted);">
+                Showing {{ history|length }} record(s). Most recent first.
+            </div>
+
+            {% else %}
+            <!-- Empty State -->
+            <div class="card">
+                <div class="empty-state">
+                    <div class="empty-icon">📂</div>
+                    <h3 style="margin-bottom:8px;color:var(--text-secondary);">No Analysis History Yet</h3>
+                    <p>You haven't analyzed any URLs yet. Go to the <a href="/">Analyzer</a> to get started.</p>
+                    <div style="margin-top:20px;">
+                        <a href="/" class="btn btn-primary">🔍 Start Analyzing</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- CNS Educational Note -->
+            <div class="card" style="margin-top:24px;background:rgba(59,130,246,0.05);border-color:rgba(59,130,246,0.2);">
+                <div class="card-title text-blue">
+                    <span class="icon">📚</span> CNS Concept: Audit Logging
+                </div>
+                <p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.7;">
+                    In cybersecurity, <strong style="color:var(--text-primary);">audit logging</strong> is the practice of recording security-relevant events 
+                    for review, forensic analysis, and compliance. This history page demonstrates how security systems 
+                    maintain audit trails. Organizations use logs to detect patterns, investigate incidents, 
+                    and prove regulatory compliance. Every URL analyzed here is stored with timestamp information 
+                    using <strong style="color:var(--text-primary);">SQLite</strong> — a lightweight relational database.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>🛡️ <span>Phishing Detection System</span> — Computer and Network Security College Project</p>
+    </footer>
+
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

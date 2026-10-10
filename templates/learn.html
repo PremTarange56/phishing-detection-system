@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<!--
+    learn.html — Learn About Phishing Page
+    CNS Concept: Security awareness and education
+    Explains phishing, URL structure, HTTPS, and how to stay safe
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn About Phishing | Phishing Detection System</title>
+    <meta name="description" content="Learn about phishing attacks, malicious URLs, HTTPS, and how to stay safe online. Educational guide from the CNS Phishing Detection Project.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<div class="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <div class="brand-name">PhishDetect</div>
+                    <div class="brand-sub">CNS Security Project</div>
+                </div>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a href="/">🏠 Analyzer</a></li>
+                <li><a href="/history">📋 History</a></li>
+                <li><a href="/learn" class="active">📖 Learn</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+
+            <!-- Page Header -->
+            <div class="hero" style="padding: 40px 0 32px;">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    CNS Educational Resource
+                </div>
+                <h1 style="font-size: clamp(1.5rem, 4vw, 2.2rem);">Learn About Phishing</h1>
+                <p>
+                    Understand how phishing attacks work, how to identify malicious URLs, 
+                    and how to protect yourself online.
+                </p>
+            </div>
+
+            <!-- Table of Contents -->
+            <div class="card mb-6" style="background: rgba(0,212,255,0.04); border-color: var(--border-primary);">
+                <div class="card-title text-cyan">📑 Contents</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;">
+                    <a href="#what-is-phishing" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">1. What is Phishing?</a>
+                    <a href="#how-attacks-work" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">2. How Phishing Attacks Work</a>
+                    <a href="#malicious-urls" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">3. What is a Malicious URL?</a>
+                    <a href="#https-explained" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">4. HTTP vs HTTPS</a>
+                    <a href="#domain-names" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">5. Domain Names Explained</a>
+                    <a href="#fake-login-pages" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">6. Fake Login Pages</a>
+                    <a href="#identify-suspicious" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">7. Identifying Suspicious Links</a>
+                    <a href="#stay-safe" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">8. How to Stay Safe</a>
+                    <a href="#url-anatomy" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">9. Anatomy of a URL</a>
+                    <a href="#security-tips" style="font-size:0.85rem;padding:6px;border-radius:6px;color:var(--text-secondary);">10. Security Tips</a>
+                </div>
+            </div>
+
+            <!-- Section 1: What is Phishing -->
+            <div class="card learn-section" id="what-is-phishing">
+                <h2>🎣 1. What is Phishing?</h2>
+                <p>
+                    <strong>Phishing</strong> is a type of <strong>social engineering attack</strong> where cybercriminals 
+                    attempt to deceive users into revealing sensitive information — such as usernames, passwords, 
+                    credit card numbers, or bank details — by impersonating trusted entities.
+                </p>
+                <p>
+                    The term "phishing" is derived from "fishing" — attackers cast a wide net (mass emails, 
+                    fake websites) hoping that some victims will "take the bait."
+                </p>
+                <div class="warning-box">
+                    <strong>⚠️ CNS Concept: Social Engineering</strong><br>
+                    Social engineering exploits human psychology rather than technical vulnerabilities. 
+                    Phishing is the most common form of social engineering attack, accounting for 
+                    over 80% of reported security incidents worldwide.
+                </div>
+                <p><strong>Types of Phishing:</strong></p>
+                <ul>
+                    <li><strong>Email Phishing:</strong> Mass fraudulent emails impersonating banks, services, or organizations</li>
+                    <li><strong>Spear Phishing:</strong> Targeted attacks on specific individuals with personalized information</li>
+                    <li><strong>Smishing:</strong> Phishing via SMS text messages</li>
+                    <li><strong>Vishing:</strong> Voice phishing via phone calls</li>
+                    <li><strong>Whaling:</strong> Phishing targeting high-profile individuals (CEOs, executives)</li>
+                </ul>
+            </div>
+
+            <!-- Section 2: How Phishing Attacks Work -->
+            <div class="card learn-section" id="how-attacks-work">
+                <h2>⚙️ 2. How Phishing Attacks Work</h2>
+                <p>A typical phishing attack follows these steps:</p>
+                <ol>
+                    <li><strong>Reconnaissance:</strong> Attacker researches the target and selects a trusted brand to impersonate</li>
+                    <li><strong>Setup:</strong> A fake website is created that looks identical to the legitimate site</li>
+                    <li><strong>Bait:</strong> Phishing emails/messages are sent with urgent calls to action ("Your account is suspended!")</li>
+                    <li><strong>Hook:</strong> Victim clicks the malicious link and is directed to the fake website</li>
+                    <li><strong>Capture:</strong> Victim enters credentials; attacker captures them</li>
+                    <li><strong>Exploitation:</strong> Attacker uses stolen credentials to access real accounts</li>
+                </ol>
+                <div class="danger-box">
+                    <strong>🔴 Red Flag — Urgency Tactics:</strong><br>
+                    Phishing messages almost always create a sense of urgency: "Your account will be closed in 24 hours," 
+                    "Verify immediately," "Suspicious activity detected." Legitimate organizations rarely demand immediate action via email.
+                </div>
+            </div>
+
+            <!-- Section 3: Malicious URLs -->
+            <div class="card learn-section" id="malicious-urls">
+                <h2>🔗 3. What is a Malicious URL?</h2>
+                <p>
+                    A <strong>malicious URL</strong> is a web address specifically crafted to deceive users or 
+                    deliver harmful content. Attackers use various techniques to make malicious URLs appear legitimate.
+                </p>
+                <p><strong>Common Malicious URL Techniques:</strong></p>
+                
+                <p><strong>1. IP Addresses instead of domain names:</strong></p>
+                <div class="example-url-box danger">🔴 http://192.168.1.100/login/verify — Uses IP address instead of domain</div>
+                
+                <p><strong>2. Brand name in subdomain (domain spoofing):</strong></p>
+                <div class="example-url-box danger">🔴 http://paypal.secure-verify.fake.com — PayPal is subdomain, not real domain</div>
+                <div class="example-url-box safe">🟢 https://paypal.com — Actual PayPal domain</div>
+                
+                <p><strong>3. Typosquatting:</strong></p>
+                <div class="example-url-box danger">🔴 http://g00gle.com — Uses zeros instead of 'o'</div>
+                <div class="example-url-box danger">🔴 http://paypa1.com — Uses '1' instead of 'l'</div>
+                
+                <p><strong>4. Using @ symbol:</strong></p>
+                <div class="example-url-box danger">🔴 http://legit.com@evil.com — Browser ignores everything before @</div>
+                
+                <p><strong>5. URL shorteners to hide true destination:</strong></p>
+                <div class="example-url-box danger">🔴 http://bit.ly/abc123 — Hides actual malicious destination</div>
+            </div>
+
+            <!-- Section 4: HTTP vs HTTPS -->
+            <div class="card learn-section" id="https-explained">
+                <h2>🔒 4. What is HTTPS? (HTTP vs HTTPS)</h2>
+                
+                <p>
+                    <strong>HTTP</strong> (HyperText Transfer Protocol) is the foundation of data communication on the web. 
+                    <strong>HTTPS</strong> (HTTP Secure) is HTTP with an additional security layer called <strong>TLS/SSL</strong>.
+                </p>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0;">
+                    <div class="danger-box" style="border-radius: var(--radius-md);">
+                        <strong>HTTP (Insecure)</strong><br><br>
+                        ❌ Data sent as plain text<br>
+                        ❌ Vulnerable to eavesdropping<br>
+                        ❌ Susceptible to Man-in-the-Middle attacks<br>
+                        ❌ No server authentication<br>
+                        <br>
+                        <code>http://example.com</code>
+                    </div>
+                    <div class="info-box" style="border-radius: var(--radius-md);">
+                        <strong>HTTPS (Secure)</strong><br><br>
+                        ✅ Data encrypted with TLS/SSL<br>
+                        ✅ Protected from eavesdropping<br>
+                        ✅ Server identity verified<br>
+                        ✅ Data integrity guaranteed<br>
+                        <br>
+                        <code>https://example.com</code>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Important Warning:</strong><br>
+                    HTTPS only means the <em>connection</em> is encrypted — it does NOT mean the website is safe or legitimate! 
+                    Many phishing websites now use HTTPS with free certificates (e.g., Let's Encrypt). 
+                    Always verify the domain, not just the lock icon.
+                </div>
+                
+                <p>
+                    <strong>TLS/SSL (Transport Layer Security / Secure Sockets Layer)</strong> is the cryptographic 
+                    protocol that powers HTTPS. It provides:
+                </p>
+                <ul>
+                    <li><strong>Encryption:</strong> Scrambles data so only intended parties can read it</li>
+                    <li><strong>Authentication:</strong> Verifies the server's identity via digital certificates</li>
+                    <li><strong>Integrity:</strong> Ensures data hasn't been tampered with in transit</li>
+                </ul>
+            </div>
+
+            <!-- Section 5: Domain Names -->
+            <div class="card learn-section" id="domain-names">
+                <h2>🌐 5. Domain Names Explained</h2>
+                <p>
+                    A <strong>domain name</strong> is the human-readable address of a website. 
+                    Understanding domain structure helps identify phishing URLs.
+                </p>
+                
+                <div style="background:var(--bg-input);border:1px solid var(--border-card);border-radius:var(--radius-md);padding:20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:0.85rem;overflow-x:auto;">
+                    <div style="color:var(--text-muted);margin-bottom:12px;">Anatomy of a URL:</div>
+                    <div style="font-size:1rem;">
+                        <span style="color:#8b5cf6;">https://</span><span style="color:#10b981;">secure.</span><span style="color:#00d4ff;">paypal</span><span style="color:#f59e0b;">.com</span><span style="color:#ef4444;">/login</span>
+                    </div>
+                    <div style="margin-top:12px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:0.78rem;">
+                        <span style="color:#8b5cf6;">https://</span><span style="color:var(--text-muted);">Protocol/Scheme — how the browser communicates</span>
+                        <span style="color:#10b981;">secure.</span><span style="color:var(--text-muted);">Subdomain — can be anything the site owner chooses</span>
+                        <span style="color:#00d4ff;">paypal</span><span style="color:var(--text-muted);">Domain name — the actual registered name (check this!)</span>
+                        <span style="color:#f59e0b;">.com</span><span style="color:var(--text-muted);">Top-Level Domain (TLD) — country or category</span>
+                        <span style="color:#ef4444;">/login</span><span style="color:var(--text-muted);">Path — specific page on the website</span>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>Key Rule:</strong> Always read the <strong>domain name</strong> (the part just before the TLD). 
+                    In <code>http://paypal.secure-login.com</code>, the actual domain is <code>secure-login.com</code> — NOT PayPal!
+                </div>
+            </div>
+
+            <!-- Section 6: Fake Login Pages -->
+            <div class="card learn-section" id="fake-login-pages">
+                <h2>🎭 6. Why Attackers Use Fake Login Pages</h2>
+                <p>
+                    Fake login pages (also called <strong>credential harvesting pages</strong>) are websites 
+                    designed to look identical to legitimate websites in order to trick users into 
+                    entering their username and password.
+                </p>
+                <p><strong>Why they work:</strong></p>
+                <ul>
+                    <li>Modern browsers render HTML/CSS identically — making clones look perfect</li>
+                    <li>Attackers copy the exact HTML/CSS of legitimate websites</li>
+                    <li>Users are trained to trust visual appearance, not URL structure</li>
+                    <li>Urgency and fear override careful thinking</li>
+                    <li>Some fake sites even redirect to the real site after capturing credentials</li>
+                </ul>
+                <div class="danger-box">
+                    <strong>🔴 Attack Flow:</strong><br>
+                    User receives email → clicks link → lands on fake page → enters credentials → 
+                    attacker captures credentials → user redirected to real site (doesn't suspect anything)
+                </div>
+            </div>
+
+            <!-- Section 7: Identifying Suspicious Links -->
+            <div class="card learn-section" id="identify-suspicious">
+                <h2>🔎 7. How to Identify Suspicious Links</h2>
+                <p>Before clicking any link, check for these red flags:</p>
+                
+                <div style="display:grid;gap:12px;margin:16px 0;">
+                    <div class="warning-box" style="margin:0;">
+                        <strong>1. Check the full URL, not just the display text</strong><br>
+                        "Click here for PayPal" might link to "http://evil.com/paypal-fake/"
+                    </div>
+                    <div class="warning-box" style="margin:0;">
+                        <strong>2. Look for misspellings in the domain</strong><br>
+                        amazon → amazzon, google → g00gle, paypal → paypa1
+                    </div>
+                    <div class="warning-box" style="margin:0;">
+                        <strong>3. Suspicious TLDs</strong><br>
+                        .tk, .ml, .ga, .cf, .xyz are often used for phishing (free or cheap)
+                    </div>
+                    <div class="warning-box" style="margin:0;">
+                        <strong>4. IP addresses instead of domain names</strong><br>
+                        No legitimate service asks you to log in via an IP address
+                    </div>
+                    <div class="warning-box" style="margin:0;">
+                        <strong>5. Very long URLs with many parameters</strong><br>
+                        Legitimate sites rarely use extremely long URLs with many query parameters
+                    </div>
+                    <div class="warning-box" style="margin:0;">
+                        <strong>6. Unexpected urgency in accompanying message</strong><br>
+                        "Act now!", "Your account is suspended", "Verify immediately"
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 8: Stay Safe -->
+            <div class="card learn-section" id="stay-safe">
+                <h2>🛡️ 8. How to Stay Safe from Phishing</h2>
+                <div class="info-box">
+                    <strong>Remember: Phishing attacks technical and human vulnerabilities. Awareness is your first defense.</strong>
+                </div>
+                <ul>
+                    <li>Never click links in unexpected emails — navigate directly to websites</li>
+                    <li>Enable <strong>Two-Factor Authentication (2FA)</strong> on all accounts</li>
+                    <li>Use a <strong>password manager</strong> — it won't auto-fill on fake sites</li>
+                    <li>Keep your browser and OS <strong>updated</strong> — they include phishing protection</li>
+                    <li>Report suspicious emails to your email provider</li>
+                    <li>Verify unusual requests via a separate communication channel</li>
+                    <li>Use tools like this system to analyze suspicious URLs before visiting</li>
+                    <li>Trust your instincts — if something feels off, it probably is</li>
+                </ul>
+            </div>
+
+            <!-- Section 9: URL Anatomy -->
+            <div class="card learn-section" id="url-anatomy">
+                <h2>🔬 9. How This System Analyzes URLs</h2>
+                <p>
+                    This Phishing Detection System performs <strong>static URL analysis</strong> — meaning it 
+                    analyzes the URL's structure without ever visiting the website. Here are the features extracted:
+                </p>
+                
+                <div style="overflow-x:auto;">
+                    <table class="analysis-table" style="margin-top:16px;">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Why It Matters</th>
+                                <th>Risk Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="feature-name">No HTTPS</td>
+                                <td class="feature-detail">Connection is unencrypted; susceptible to MITM attacks</td>
+                                <td><span class="status-badge warning">+15</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">IP Address in URL</td>
+                                <td class="feature-detail">Legitimate sites use domain names; IPs bypass blacklists</td>
+                                <td><span class="status-badge danger">+25</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Long URL (>75 chars)</td>
+                                <td class="feature-detail">Phishing URLs are long to hide malicious components</td>
+                                <td><span class="status-badge warning">+10</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Very Long URL (>120)</td>
+                                <td class="feature-detail">Extreme length highly indicative of phishing</td>
+                                <td><span class="status-badge danger">+15</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">@ Symbol</td>
+                                <td class="feature-detail">Causes browsers to redirect to address after @</td>
+                                <td><span class="status-badge danger">+20</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Many Subdomains</td>
+                                <td class="feature-detail">Used to fake legitimate-looking domains</td>
+                                <td><span class="status-badge warning">+15</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Suspicious Keywords</td>
+                                <td class="feature-detail">Words like login, verify, password — social engineering triggers</td>
+                                <td><span class="status-badge warning">+10 each</span></td>
+                            </tr>
+                            <tr>
+                                <td class="feature-name">Suspicious TLD</td>
+                                <td class="feature-detail">Free TLDs (.tk, .ml) heavily abused for phishing</td>
+                                <td><span class="status-badge danger">+15</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Section 10: Security Tips -->
+            <div id="security-tips">
+                <div class="section-header" style="margin-top:8px;">
+                    <div class="section-title">💡 Security Tips</div>
+                </div>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon">🔍</div>
+                        <div>
+                            <div class="tip-title">Check the Domain Carefully</div>
+                            <div class="tip-text">Read every character in the domain. One changed letter can lead to a phishing site.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">📧</div>
+                        <div>
+                            <div class="tip-title">Distrust Unexpected Emails</div>
+                            <div class="tip-text">Do not click links in unexpected emails. Navigate directly to websites by typing the address.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🔒</div>
+                        <div>
+                            <div class="tip-title">Check HTTPS First</div>
+                            <div class="tip-text">Never enter passwords on HTTP pages. HTTPS is necessary but not sufficient for safety.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">📱</div>
+                        <div>
+                            <div class="tip-title">Enable Two-Factor Auth</div>
+                            <div class="tip-text">2FA protects accounts even when passwords are stolen. Enable it everywhere possible.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🚫</div>
+                        <div>
+                            <div class="tip-title">Don't Trust HTTPS Blindly</div>
+                            <div class="tip-text">HTTPS means encrypted connection, not a trustworthy website. Verify the domain too.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">✅</div>
+                        <div>
+                            <div class="tip-title">Verify via Official Sources</div>
+                            <div class="tip-text">If in doubt, search for the official website through a search engine, not through provided links.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🔑</div>
+                        <div>
+                            <div class="tip-title">Use a Password Manager</div>
+                            <div class="tip-text">Password managers only auto-fill on the correct domain, protecting against fake login pages.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">📞</div>
+                        <div>
+                            <div class="tip-title">Verify Unusual Requests</div>
+                            <div class="tip-text">If a colleague or organization asks for sensitive data, verify through a separate channel.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="card" style="margin-top:32px;text-align:center;background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(59,130,246,0.05));border-color:var(--border-primary);">
+                <div style="font-size:2rem;margin-bottom:12px;">🛡️</div>
+                <h3 style="margin-bottom:8px;">Ready to Analyze a URL?</h3>
+                <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:20px;">
+                    Put your knowledge to practice. Analyze any suspicious URL with our detection system.
+                </p>
+                <a href="/" class="btn btn-primary">🔍 Go to Analyzer</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>🛡️ <span>Phishing Detection System</span> — Computer and Network Security College Project</p>
+        <p style="margin-top:6px;">Educational content. Always verify information with authoritative cybersecurity sources.</p>
+    </footer>
+
+</div>
+
+<script src="/static/js/script.js"></script>
+</body>
+</html>

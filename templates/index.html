@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<!--
+    index.html — Phishing Detection System — Main Page
+    CNS Project: Computer and Network Security
+    Author: College CNS Project
+    
+    Features:
+    - URL input and analysis
+    - Real-time results display
+    - Dashboard statistics
+    - Example URLs for demo
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Detection System | CNS Project</title>
+    <meta name="description" content="Analyze any URL for phishing indicators using rule-based security analysis. A Computer and Network Security educational project.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- Loading Overlay -->
+<div class="loader-overlay" id="loaderOverlay">
+    <div class="loader-ring"></div>
+    <div class="loader-text">🔍 ANALYZING URL...</div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast"></div>
+
+<div class="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand">
+                <div class="shield-icon">🛡️</div>
+                <div>
+                    <div class="brand-name">PhishDetect</div>
+                    <div class="brand-sub">CNS Security Project</div>
+                </div>
+            </a>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+            <ul class="navbar-nav" id="navbarNav">
+                <li><a href="/" class="active">🏠 Analyzer</a></li>
+                <li><a href="/history">📋 History</a></li>
+                <li><a href="/learn">📖 Learn</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+
+            <!-- Hero Section -->
+            <div class="hero">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    CNS College Project — Defensive Cybersecurity
+                </div>
+                <h1>Phishing Detection<br>System</h1>
+                <p>
+                    Enter any website URL to analyze it for phishing indicators.
+                    Our rule-based engine inspects URL structure without ever visiting the site.
+                </p>
+            </div>
+
+            <!-- URL Input Card -->
+            <div class="url-input-card">
+                <label class="input-label" for="urlInput">🔗 Enter Website URL</label>
+                <div class="input-wrapper">
+                    <div style="position:relative;flex:1;">
+                        <span class="input-icon">🌐</span>
+                        <input
+                            type="text"
+                            id="urlInput"
+                            class="url-input"
+                            placeholder="https://example.com/login"
+                            autocomplete="off"
+                            spellcheck="false"
+                            maxlength="2048"
+                            aria-label="URL to analyze"
+                        >
+                    </div>
+                    <button class="btn-analyze" id="analyzeBtn">
+                        <span>🔍</span> Analyze URL
+                    </button>
+                </div>
+
+                <!-- Example URLs -->
+                <div class="examples-section">
+                    <div class="examples-label">
+                        ⚡ Try example URLs (click to fill):
+                    </div>
+                    <div class="example-tags" id="exampleTags">
+                        <!-- Populated by script.js -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Section (shown after analysis) -->
+            <div class="result-section" id="resultSection">
+                <!-- Dynamically populated by script.js -->
+            </div>
+
+            <!-- Security Tips (shown below result) -->
+            <div style="margin-top: 40px;">
+                <div class="section-header">
+                    <div class="section-title">🛡️ Quick Security Tips</div>
+                </div>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon">🔒</div>
+                        <div>
+                            <div class="tip-title">Check for HTTPS</div>
+                            <div class="tip-text">Always verify the URL starts with https:// before entering sensitive data. Look for the padlock icon.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🔍</div>
+                        <div>
+                            <div class="tip-title">Examine the Domain</div>
+                            <div class="tip-text">Carefully read the domain name. Attackers use typos like "paypa1.com" or "g00gle.com" to deceive.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">📧</div>
+                        <div>
+                            <div class="tip-title">Be Email Wary</div>
+                            <div class="tip-text">Do not click links in unsolicited emails. Go directly to websites by typing the address manually.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🔑</div>
+                        <div>
+                            <div class="tip-title">Enable 2FA</div>
+                            <div class="tip-text">Two-factor authentication protects your accounts even if your password is compromised.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">🚫</div>
+                        <div>
+                            <div class="tip-title">Trust HTTPS Wisely</div>
+                            <div class="tip-text">HTTPS only means the connection is encrypted — it does NOT guarantee the site is legitimate.</div>
+                        </div>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon">📱</div>
+                        <div>
+                            <div class="tip-title">Hover Before Click</div>
+                            <div class="tip-text">On desktop, hover over links to preview the actual URL in your browser's status bar before clicking.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Statistics -->
+            <div style="margin-top: 48px;">
+                <div class="section-header">
+                    <div class="section-title">📊 Analysis Dashboard</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card total">
+                        <div class="stat-number" id="statTotal">{{ stats.total }}</div>
+                        <div class="stat-label">Total Analyzed</div>
+                    </div>
+                    <div class="stat-card low">
+                        <div class="stat-number" id="statLow">{{ stats.low }}</div>
+                        <div class="stat-label">🟢 Low Risk</div>
+                    </div>
+                    <div class="stat-card med">
+                        <div class="stat-number" id="statMed">{{ stats.suspicious }}</div>
+                        <div class="stat-label">🟡 Suspicious</div>
+                    </div>
+                    <div class="stat-card high">
+                        <div class="stat-number" id="statHigh">{{ stats.high }}</div>
+                        <div class="stat-label">🔴 High Risk</div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <div class="card" style="margin-top:0;">
+                    <div class="card-title"><span class="icon">📈</span> Risk Distribution</div>
+                    <div class="chart-container">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Recent Analyses -->
+                {% if recent %}
+                <div class="card" style="margin-top:16px;">
+                    <div class="card-title"><span class="icon">🕐</span> Recent Analyses</div>
+                    <div class="history-table-wrapper">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>URL</th>
+                                    <th>Score</th>
+                                    <th>Risk Level</th>
+                                    <th>Analyzed At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in recent %}
+                                <tr>
+                                    <td class="url-cell" title="{{ item.url }}">{{ item.url }}</td>
+                                    <td>
+                                        {% if item.risk_level == 'LOW' %}
+                                            <span class="status-badge safe">{{ item.risk_score }}/100</span>
+                                        {% elif item.risk_level == 'SUSPICIOUS' %}
+                                            <span class="status-badge warning">{{ item.risk_score }}/100</span>
+                                        {% else %}
+                                            <span class="status-badge danger">{{ item.risk_score }}/100</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if item.risk_level == 'LOW' %}
+                                            <span class="status-badge safe">🟢 Low</span>
+                                        {% elif item.risk_level == 'SUSPICIOUS' %}
+                                            <span class="status-badge warning">🟡 Suspicious</span>
+                                        {% else %}
+                                            <span class="status-badge danger">🔴 High Risk</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="date-cell">{{ item.analyzed_at }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="margin-top:12px;text-align:right;">
+                        <a href="/history" class="btn btn-ghost" style="font-size:0.8rem;">View All History →</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>🛡️ <span>Phishing Detection System</span> — Computer and Network Security College Project</p>
+        <p style="margin-top:6px;">Static URL analysis only. No websites are visited. Not a substitute for professional security tools.</p>
+    </footer>
+
+</div>
+
+<!-- Initialize chart with server-side data -->
+<script>
+    window.CHART_DATA = {
+        low: {{ stats.low }},
+        suspicious: {{ stats.suspicious }},
+        high: {{ stats.high }}
+    };
+</script>
+<script src="/static/js/script.js"></script>
+</body>
+</html>
